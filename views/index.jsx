@@ -16,7 +16,36 @@ class TodoList extends React.Component {
  render ()
  {
     return (
-      <div className="todoList">I am a TodoList</div>
+      <div className="todoList">
+        <table styles={{border: "2px solid black"}}>
+          <tbody>
+            <Todo title="Shopping">Milk</Todo>
+            <Todo title="Hair cut">13:00</Todo>
+          </tbody>
+        </table>
+      </div>
+    )
+  }
+}
+
+class Todo extends React.Component {
+  //Write code here
+  render() {
+    return (
+      <div className="todoList">
+        <table styles="border:2px solid black;">
+          <tbody>
+            <tr>
+              <td styles="border: 1px solid black;">{this.props.title}</td>
+              <td styles="border: 1px solid black;">{this.props.children}</td>
+            </tr>
+            <tr>
+              <td styles="border: 1px solid black;">{this.props.title}</td>
+              <td styles="border: 1px solid black;">{this.props.children}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     )
   }
 }
