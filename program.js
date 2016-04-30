@@ -9,11 +9,15 @@ var express = require('express');
     require('babel/register')({
         ignore: false
     });
+	
+	var data = [];
 
     app.use('/', function(req, res) {
-      res.render('index', '');
+      res.render('index', {data: data});
     });
 
     app.listen(app.get('port'), function() {
+		data.push({ title: 'Shopping' , 'detail': process.argv[3]});
+		data.push({ title: 'Hair cut', 'detail': process.argv[4]});
 		console.log('listening on port 3000');
 	});
