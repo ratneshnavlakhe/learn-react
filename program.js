@@ -14,6 +14,9 @@ require('babel/register')({
 
 var TodoBox = require('./views/index.jsx');
 
+var express = require('express');
+var app = express();
+
 app.use('/bundle.js', function (req, res) {
 	res.setHeader('Content-type', 'application/javascript');
 	
