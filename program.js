@@ -18,18 +18,18 @@ var express = require('express');
 var app = express();
 
 app.use('/bundle.js', function (req, res) {
-	res.setHeader('Content-type', 'application/javascript');
-	
-	browserify({ debug: true })
-		.transform(babelify.configure({
-			presets: ["react", "es2015"],
-			compact: false
-		}))
-		.require("./app.js", { entry: true })
-		.bundle()
-		.pipe(res);
-})
+  res.setHeader('Content-type', 'application/javascript');
 
+  browserify({ debug: true })
+    .transform(babelify.configure({
+      presets: ["react", "es2015"],
+      compact: false
+    }))
+    .require("./app.js", { entry: true })
+    .bundle()
+    .pipe(res);
+})
+var data = [];
 app.use('/', function (req, res) {
   var initialData = JSON.stringify(data);
   var markup = ReactDOMServer.renderToString(React.createElement(TodoBox, { data: data }));
@@ -54,7 +54,7 @@ app.set('views', __dirname + '/views');
 app.engine('jsx', require('express-react-views').createEngine({ transformViews: false }));
 
 app.listen(app.get('port'), function() {
-//data.push({ title: 'Shopping' , 'detail': process.argv[3]});
-//data.push({ title: 'Hair cut', 'detail': process.argv[4]});
+data.push({ title: 'Shopping' , 'detail': process.argv[3]});
+data.push({ title: 'Hair cut', 'detail': process.argv[4]});
 console.log('listening on port 3000');
 });
