@@ -23,6 +23,7 @@ class TodoList extends React.Component {
 		this.changeTitle = this.changeTitle.bind(this);
 		this.changeDetail = this.changeDetail.bind(this);
 		this.addTodo = this.addTodo.bind(this);
+		this.onDelete = this.onDelete.bind(this);
 	}
 	
 	changeTitle(e) {
@@ -31,6 +32,14 @@ class TodoList extends React.Component {
 	
 	changeDetail(e) {
 		this.setState({ detailValue: e.target.value })
+	}
+	
+	onDelete(title) {
+		let newData = this.state.data.filter(function (data) {
+			return todo.title !== title;
+		});
+		
+		this.setState({ data: newData });
 	}
 	
 	addTodo() {
@@ -59,24 +68,33 @@ class Todo extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {checked: false};
+    this.state = {
+		checked: false,
+		TodoStyle: style.notCheckedTodo
+	};
     this.handleChange = this.handleChange.bind(this);
+	this._onDelete = this._onDelete.bind(this);
   }
 
   handleChange(e) {
     this.setState({ checked: e.target.checked });
   }
+  
+  _onDelete() {
+	this.props.onDelete(this.props.title);
+  }
     render() {
-      var trstyle = styles.notCheckedTodo;
-      if(this.state.checked) trstyle = styles.checkedTodo;
+      var trstyle = style.notCheckedTodo;
+      if(this.state.checked) trstyle = style.checkedTodo;
 
         return (
-            <tr style={trstyle}>
-                <td style={{border: "1px solid black"}}>
+            <tr style={this.state.TodoStyle}>
+				<td style={style.tableContent}><button onClick={this._onDelete}>X</button></td>
+                <td style={style.tableContent}>
                   <input type="checkbox" checked={this.state.checked} onChange={this.handleChange}/>
                 </td>
-                <td style={{border: "1px solid black"}}>{this.props.title}</td>
-                <td style={{border: "1px solid black"}}>{this.props.children}</td>
+                <td style={style.tableContent}>{this.props.title}</td>
+                <td style={style.tableContent}>{this.props.children}</td>
             </tr>
         );
     }
@@ -96,7 +114,7 @@ class TodoForm extends React.Component {
 }
 
 
-let styles = {
+let style = {
   checkedTodo: {
     textDecoration: "line-through"
   },
